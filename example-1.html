@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Input style functionality implementation</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="output/styleguide.css"/>
+</head>
+<body>
+
+    <div class="sg-container">
+        <div class="sg-input" ng-class="{'sg-input--selected': hasFocus, 'sg-input--invalid': !value && changed, 'sg-input--valid': !!value}">
+            <label class="sg-input__label">Name</label>
+            <input class="sg-input__element" name="name" ng-model="value" ng-focus="hasFocus=true" ng-blur="hasFocus=false" ng-change="changed=true" required>
+            <div class="sg-input__description">User name</div>
+        </div>
+    </div>
+
+    <script>
+        angular.module('myApp', []);
+    </script>
+
+</body>
+</html>

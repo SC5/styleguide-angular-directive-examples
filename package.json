@@ -1,0 +1,16 @@
+{
+  "name": "styleguide-angular-examples",
+  "version": "1.0.0",
+  "description": "Examples of implementing style functionality with AngularJS for blog post",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kari.heikkinen@sc5.io",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4",
+    "sc5-styleguide": "^0.3.37"
+  }
+}

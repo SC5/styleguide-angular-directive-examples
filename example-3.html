@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Implementation in directive with ng-model binding</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="output/styleguide.css"/>
+</head>
+<body>
+
+    <div class="sg-container" ng-form name="myForm">
+        <sg-input label="Name" name="name" ng-model="formField.name" description="User name" required minlength="4"></sg-input>
+        <pre>Value: {{formField.name}} <br/>Valid: {{myForm.name.$valid}}</pre>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .directive('sgInput', function () {
+                return {
+                    restrict: 'E',
+                    replace: true,
+                    templateUrl: 'sg-input.html',
+                    scope: {
+                        'value': '=ngModel',
+                        'label': '@',
+                        'description': '@'
+                    }
+                };
+            });
+    </script>
+
+    <script type="text/ng-template" id="sg-input.html">
+        <div class="sg-input"
+             ng-class="{'sg-input--selected': hasFocus, 'sg-input--invalid': !value && changed, 'sg-input--valid': !!value}">
+            <label class="sg-input__label">{{label}}</label>
+            <input class="sg-input__element" name="{{label}}" ng-model="value" ng-focus="hasFocus=true"
+                   ng-blur="hasFocus=false" ng-change="changed=true">
+
+            <div class="sg-input__description">{{description}}</div>
+        </div>
+    </script>
+
+
+</body>
+</html>

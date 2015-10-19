@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>The better way</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-messages.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="output/styleguide.css"/>
+</head>
+<body>
+
+    <div class="sg-container" ng-form name="myForm">
+        <div class="sg-input">
+            <label class="sg-input__label">Email</label>
+            <input class="sg-input__element" name="email" ng-model="formField.email" type="email" required>
+
+            <div class="sg-input__description" ng-show="myForm.email.$valid">
+                User's email address
+            </div>
+            <div class="sg-input__description" ng-messages="myForm.email.$error">
+                <div ng-message="email">Not a valid email address</div>
+                <div ng-message="required">User email is required</div>
+            </div>
+        </div>
+
+        <pre>Value: {{formField.email}} <br/>Valid: {{myForm.email.$valid}}</pre>
+    </div>
+
+    <script>
+        angular.module('myApp', ['ngMessages'])
+            .directive('sgInput', function () {
+                return {
+                    restrict: 'C',
+                    controller: function($element) {
+                        this.setValid = function(isValid) {
+                            console.log('setValid', isValid);
+                            $element.toggleClass('sg-input--valid', isValid);
+                        };
+                        this.setInvalid = function(isInvalid) {
+                            console.log('setInvalid', isInvalid);
+                            $element.toggleClass('sg-input--invalid', isInvalid);
+                        };
+                        this.setSelected = function(isSelected) {
+                            $element.toggleClass('sg-input--selected', isSelected);
+                        };
+                    }
+                };
+            })
+            .directive('sgInputElement', function () {
+                return {
+                    restrict: 'C',
+                    require: ['^sgInput', '?ngModel'],
+                    link: function(scope, element, attrs, controllers) {
+                        var sgInputCtrl = controllers[0];
+                        var ngModelCtrl = controllers[1];
+
+                        // If no parent controller, there isn't anything to do
+                        if(!sgInputCtrl) {
+                            return;
+                        }
+
+
+                        element.on('focus', function() {
+                            sgInputCtrl.setSelected(true);
+                        });
+
+                        element.on('blur', function() {
+                            sgInputCtrl.setSelected(false);
+                        });
+
+                        if(ngModelCtrl) {
+                            scope.$watch(function() {
+                                return ngModelCtrl.$valid;
+                            }, function(isValid) {
+                                sgInputCtrl.setValid(isValid);
+                            });
+
+                            scope.$watch(function() {
+                                return ngModelCtrl.$invalid & ngModelCtrl.$dirty;
+                            }, function(isInvalid) {
+                                sgInputCtrl.setInvalid(isInvalid);
+                            });
+                        }
+                    }
+                };
+            });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+// Input style
+//
+// Styled input with status modifiers for indication.
+//
+// default              - Default state
+// .sg-input--selected  - Input element has focus
+// .sg-input--valid     - Input value is valid and no focus
+// .sg-input--invalid   - Input value is invalid
+//
+// Markup:
+// <div class="sg-input {$modifiers}">
+//   <label class="sg-input__label">Name</label>
+//   <input class="sg-input__element"/>
+//   <div class="sg-input__description">User's name</div>
+// </div>
+//
+// Styleguide 1.0
+
+.sg-input {
+  $label-color: #bbbbbb;
+  $color-selected: #5679ff;
+  $color-error: #fa0001;
+  $color-ok: #44bd00;
+  font-family: 'Open Sans', sans-serif;
+
+  width: 240px;
+  margin-bottom: 10px;
+
+  & &__label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    line-height: 14px;
+    color: $label-color;
+  }
+
+  & &__element {
+    padding: 10px 10px;
+    font-size: 16px;
+    line-height: 20px;
+
+    outline: none;
+    border: 2px solid #EEEEEE;
+  }
+
+  & &__description {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 14px;
+
+    color: $label-color;
+  }
+
+  &--valid &__element {
+    border-color: $color-ok;
+  }
+
+  &--selected &__element {
+    border-color: $color-selected;
+  }
+
+  &--selected &__label {
+    color: $color-selected;
+  }
+
+  &--invalid &__element {
+    border-color: $color-error;
+  }
+
+  &--invalid &__description {
+    color: $color-error;
+  }
+}

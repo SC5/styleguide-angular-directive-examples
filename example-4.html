@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Implementation in directive with ng-model controller</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="output/styleguide.css"/>
+</head>
+<body>
+
+    <div class="sg-container" ng-form name="myForm">
+        <sg-input label="Name" name="name" ng-model="formField.name" description="User name" required minlength="4"></sg-input>
+        <pre>Value: {{formField.name}} <br/>Valid: {{myForm.name.$valid}}</pre>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .directive('sgInput', function () {
+                return {
+                    restrict: 'E',
+                    replace: true,
+                    templateUrl: 'sg-input.html',
+                    scope: {
+                        'label': '@',
+                        'description': '@'
+                    },
+                    require: 'ngModel',
+                    link: function (scope, element, attrs, ngModelCtrl) {
+                        // Set ngModel view value on input value change
+                        scope.$watch('value', function (value) {
+                            ngModelCtrl.$setViewValue(value);
+                        });
+
+                        // On ngModel value change update input value. This is needed to get changes from outside
+                        scope.$watch(function () {
+                            return ngModelCtrl.$modelValue;
+                        }, function (value) {
+                            if(value)
+                                scope.value = value;
+                        });
+
+                        // Update invalid flag
+                        scope.$watch(function () {
+                            return ngModelCtrl.$invalid && ngModelCtrl.$dirty;
+                        }, function (isInvalid) {
+                            scope.invalid = isInvalid;
+                        });
+
+                        // Update valid flag
+                        scope.$watch(function () {
+                            return ngModelCtrl.$valid;
+                        }, function (isValid) {
+                            scope.valid = isValid;
+                        });
+                    }
+                };
+            });
+    </script>
+
+    <script type="text/ng-template" id="sg-input.html">
+        <div class="sg-input" ng-class="{'sg-input--selected': hasFocus, 'sg-input--invalid': invalid, 'sg-input--valid': valid}">
+            <label class="sg-input__label">{{label}}</label>
+
+            <input class="sg-input__element" name="{{label}}" ng-model="value" ng-focus="hasFocus=true" ng-blur="hasFocus=false">
+
+            <div class="sg-input__description">{{description}}</div>
+        </div>
+    </script>
+
+
+</body>
+</html>
