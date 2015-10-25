@@ -9,9 +9,9 @@
 //
 // Markup:
 // <div class="sg-input {$modifiers}">
-//   <label class="sg-input__label">Name</label>
+//   <label class="sg-input__label">Label</label>
 //   <input class="sg-input__element"/>
-//   <div class="sg-input__description">User's name</div>
+//   <div class="sg-input__description">Input description / error message</div>
 // </div>
 //
 // Styleguide 1.0
@@ -71,3 +71,26 @@
     color: $color-error;
   }
 }
+
+// Input with angular directives
+//
+// Markup:
+// <div class="sg-input">
+//   <label class="sg-input__label">Label</label>
+//   <input class="sg-input__element" type="email" name="email" ng-model="value" required />
+//   <div class="sg-input__description">Email address</div>
+// </div>
+//
+// sg-wrapper:
+// <div>
+//   <sg-wrapper-content/>
+//   <div style="padding-top:20px;">
+//    <pre>Input model value: {{value}}</pre>
+//   </div>
+// </div>
+//
+// sg-angular-directive:
+// name: sgDirectives
+// file: directives/sg-input.js
+//
+// Styleguide 1.1
