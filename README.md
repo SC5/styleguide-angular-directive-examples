@@ -9,7 +9,13 @@ Install the npm packages and build the style guide
 > npm install
 ```
 
-After running the command below, the styles are generated and you can open the style guide in a browser
+After running the command below, the styles are generated and local server is started.
 ```
 > gulp styleguide
 ```
+
+Style guide should be now running in the address <a href="http://localhost:3002/">http://localhost:3002/</a> 
+
+
+## Blog examples
+Examples used in the blog post can be found from the directory `examples`. They are complete standalone examples.

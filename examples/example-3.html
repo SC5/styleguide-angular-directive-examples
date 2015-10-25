@@ -2,16 +2,17 @@
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
-    <title>Implementation in directive</title>
+    <title>Implementation in directive with ng-model binding</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="output/styleguide.css"/>
+    <link rel="stylesheet" href="../output/styleguide.css"/>
 </head>
 <body>
 
-    <div class="sg-container">
-        <sg-input label="Name" value="formField.name" description="User name"></sg-input>
+    <div class="sg-container" ng-form name="myForm">
+        <sg-input label="Name" name="name" ng-model="formField.name" description="User name" required minlength="4"></sg-input>
+        <pre>Value: {{formField.name}} <br/>Valid: {{myForm.name.$valid}}</pre>
     </div>
 
     <script>
@@ -22,7 +23,7 @@
                     replace: true,
                     templateUrl: 'sg-input.html',
                     scope: {
-                        'value': '=',
+                        'value': '=ngModel',
                         'label': '@',
                         'description': '@'
                     }
